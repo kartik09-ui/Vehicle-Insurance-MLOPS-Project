@@ -30,8 +30,8 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPO }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTORY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTORY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name = image::$ECR_REPOSITORY:$IMAGE_TAG"
   Continuous-Deplyment:
     needs: Continuous-Integration
@@ -54,5 +54,5 @@ jobs:
       - name: Run Docker Image to server users
 
         run: |
-          docker run -d -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFUALT_REGION="${{ secrets.AWS_DEFUALT_REGION }}" -e MONGODB_URL="${{ secrets.MONGODB_URL}}" -p 5000:5000 "${{ steps.logint-ec.outputs.registory }}"/"${{ secrets.ECR_REPO }}":latest
+          docker run -d -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" -e AWS_DEFUALT_REGION="${{ secrets.AWS_DEFUALT_REGION }}" -e MONGODB_URL="${{ secrets.MONGODB_URL}}" -p 5000:5000 "${{ steps.login-ecr.outputs.registry }}"/"${{ secrets.ECR_REPO }}":latest
         
