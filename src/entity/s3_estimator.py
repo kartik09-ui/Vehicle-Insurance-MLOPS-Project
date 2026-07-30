@@ -31,7 +31,7 @@ class Proj1Estimator:
         load the model from the model_path
         :return:
         """
-        return self.s3.s3_load_model(self.model_path, bucket_name=self.bucket_name)
+        return self.s3.load_model(self.model_path, bucket_name=self.bucket_name)
 
     def save_model(self, from_file,remove:bool=False)->None:
         """
